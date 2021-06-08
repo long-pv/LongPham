@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\UserController;
 
 
 
@@ -9,6 +10,9 @@ use App\Http\Controllers\Admin\LoginController;
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login.post');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('dangki', [UserController::class, 'create'])->name('dangki');
+Route::post('dangki', [UserController::class, 'store'])->name('dangki.post');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () { //controller = frefix
     Route::prefix('products')->name('products.')->group(function(){ // thư mục trong view

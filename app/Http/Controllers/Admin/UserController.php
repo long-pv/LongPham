@@ -5,43 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Requests\Admin\LoginRequest;
+use Illuminate\Support\Str;
+//use App\Http\Requests\Admin\UserRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Auth;
 
-
-
-class LoginController extends Controller
+class UserController extends Controller
 {
-
-    public function login()
-    {
-        return view('admin.login');
-    }
-
-    public function authenticate(LoginRequest $request)
-    {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
-
-        if (Auth::attempt($credentials, $request->input('remember', false))) // phải chọn true thì mới đăng nhập 
-        {
-            $request->session()->regenerate();
-            return redirect(route('admin.products.list'));//->intended
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('login');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +20,8 @@ class LoginController extends Controller
     public function index()
     {
         //
+
+
     }
 
     /**
@@ -60,6 +32,8 @@ class LoginController extends Controller
     public function create()
     {
         //
+
+        return view('admin.dangki');
     }
 
     /**
@@ -71,6 +45,9 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        User::create($data);
+        return redirect()->route('admin.products.list'); //gọi tới router khác
     }
 
     /**
