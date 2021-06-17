@@ -56,4 +56,18 @@ class ProductController extends Controller
 
         throw new ModelNotFoundException("404: Product [$id] not found!");
     }
+
+    public function store(Request $request)
+    {
+        $p = Product::create($request->all());
+        if ($p)
+        {
+            return $p;
+        }
+
+        return response()->json(
+            ['error'=>'Product is not create'],
+            422
+         );
+    }
 }

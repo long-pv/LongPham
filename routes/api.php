@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,23 +22,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::fallback(function () {
     return response()->json(['message' => 'Not Found.'], 404);
 });
 
-Route::prefix('products')->name('products.')->group(function(){
-    Route::get('/', ['ProductController@index'])->name('index');
+Route::post('login', [LoginController::class,'authenticate'])->name('login');
 
-    Route::get('/{id}/show', ['ProductController@show'])
+Route::middleware('auth:api')->prefix('products')->name('products.')->group(function(){
+    Route::get('/',[ProductController::class,'index'])->name('index');
+
+    Route::get('/{id}/show', [ProductController::class,'show'])
     ->name('show');
 
+    Route::post('store', [ProductController::class,'store'])
+    ->name('store');
 });
 
 Route::prefix('categories')->name('categories.')->group(function(){
-    Route::get('/', ['uses' => 'CategoryController@index'])->name('index');
-
-    Route::get('/{id}/show', ['uses' => 'CategoryController@show'])
+    Route::get('/', [CategoryController::class,'index'])->name('index');
+    Route::get('/{id}/show', [CategoryController::class,'show'])
     ->name('show');
 
 });
