@@ -3,9 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\UserController;
-
-
-
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login.post');
@@ -28,4 +26,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () { 
 
         Route::post('update/{id}', [ProductController::class, 'update'])->name('update'); // đưa dữ liệu vào database
     });
+
+    // category thêm ràng buộc
+    Route::prefix('categories')->name('category.')->group(function(){
+        Route::delete('/delete', [CategoryController::class,'destroy'])->name('delete'); // do chưa có phân quyền nên bỏ quyền user
+        Route::get('/', [CategoryController::class,'index'])->name('index'); 
+    });
 });
+
+

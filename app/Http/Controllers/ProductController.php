@@ -67,6 +67,6 @@ class ProductController extends Controller
             return view('product.show', compact('product'));
         }
 
-        return abort(404);
+        return abort(209); // đổi lại lỗi 404 thành 209
     }
 }
