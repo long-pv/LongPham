@@ -52,8 +52,8 @@
                     Action
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{route('admin.product.edit', $category->id)}}">Edit</a></li>
-                    <li><a class="dropdown-item" href="{{route('admin.product.show', $category->id)}}">Preview</a></li>
+                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                    <li><a class="dropdown-item" href="#">Preview</a></li>
                     <li><a class="dropdown-item" href="#">Publish</a></li>
                     <li><a class="dropdown-item delete" attr_id="{{$category->id}}" href="#">Delete</a></li>
                 </ul>
@@ -82,11 +82,11 @@
             @method('DELETE')
             <input type="hidden" id="del_id" name="item" value="0" />
             <div class="modal-header">
-                <h5 class="modal-title" id="deleleItemToggleLabel">Product Delete</h5>
+                <h5 class="modal-title" id="deleleItemToggleLabel">Category Delete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure to want to deleted this product!
+                Are you sure to want to deleted this Category!
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger" >Delete</button>
