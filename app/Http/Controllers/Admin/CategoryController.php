@@ -94,18 +94,20 @@ class CategoryController extends Controller
         {
             DB::beginTransaction(); //  xử lý có tuần tự các thao tác trên cơ sở dữ liệu
             try{
-                $product = Product::where('category_id', $request->item)->delete(); // nếu sản phẩm có category_id trùng với id của category thì xóa
-                $category->delete(); // xóa category trước
+                DB::table('products')->where('category_id', $request->item)->delete(); 
+                DB::table('categories')->where('id', $request->item)->delete();
+                // $product = Product::where('category_id', $request->item)->delete(); // nếu sản phẩm có category_id trùng với id của category thì xóa
+                // $category->delete(); // xóa category trước
 
                 DB::commit(); //để lưu các thay đổi.
-                return redirect()->route('admin.category.list')->with('success', 'Xoa thanh cong');
+                return redirect()->route('admin.category.index')->with('success', 'Xoa thanh cong');
             }catch (\Throwable $e) // nếu có lỗi xảy ra
             {
                 DB::rollBack(); // khôi phục lại các thay đổi.
                 Log::debug($e->getMessage() . $e->__toString());  // xử lí lỗi ngoại lệ
                 abort(404); //  mã lỗi HTTP từ máy chủ
             } 
-            return redirect()->route('admin.category.list')->withErrors(['error', 'Co loi trong qua trinh xoa']);
+            return redirect()->route('admin.category.index')->withErrors(['error', 'Co loi trong qua trinh xoa']);
         }
 
     }
